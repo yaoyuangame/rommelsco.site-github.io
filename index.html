@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rommel Game Studio — Play, Refined</title>
+<meta name="description" content="Rommel Game Studio builds polished casual games for mobile — clean interfaces, honest progression, and no wasted time.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#E9EBF2;
+    --bg-2:#DFE3ED;
+    --white:#FAFBFF;
+    --ink:#10131C;
+    --ink-2:#3E4658;
+    --muted:#78829A;
+    --line:#C6CCDA;
+    --chrome1:#FFFFFF;
+    --chrome2:#C7CDDA;
+    --chrome3:#7E879A;
+    --pink:#FF5FD2;
+    --violet:#7C5CFF;
+    --cyan:#5CE1E6;
+    --lime:#B4FF5C;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    background-image:
+      radial-gradient(900px 620px at 12% -8%, rgba(255,95,210,.16), transparent 62%),
+      radial-gradient(820px 600px at 92% 4%, rgba(92,225,230,.18), transparent 60%),
+      radial-gradient(760px 560px at 50% 106%, rgba(124,92,255,.14), transparent 62%);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:16.5px;font-weight:400;line-height:1.7;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  h1,h2,h3,.disp{font-family:'Chakra Petch',sans-serif;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 30px;position:relative;z-index:2}
+
+  /* chrome text */
+  .chrome{
+    background:linear-gradient(180deg,#FFFFFF 0%,#D5DBE7 32%,#7A8395 52%,#DFE4EE 66%,#FFFFFF 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 0 rgba(255,255,255,.85)) drop-shadow(0 6px 14px rgba(16,19,28,.14));
+  }
+  .holo{
+    background:linear-gradient(100deg,var(--pink) 0%,var(--violet) 32%,var(--cyan) 62%,var(--lime) 88%,var(--pink) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* ---------- header ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(233,235,242,.86);backdrop-filter:blur(16px) saturate(140%);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .mark{
+    width:34px;height:34px;border-radius:11px;flex:none;position:relative;
+    background:linear-gradient(150deg,#FFFFFF 0%,#C7CDDA 42%,#7E879A 62%,#E8ECF4 100%);
+    box-shadow:inset 0 1px 0 #fff, inset 0 -2px 4px rgba(16,19,28,.22), 0 4px 12px rgba(16,19,28,.16);
+    overflow:hidden;
+  }
+  .mark:after{
+    content:"";position:absolute;inset:8px;border-radius:5px;
+    background:linear-gradient(100deg,var(--pink),var(--violet),var(--cyan),var(--lime));
+  }
+  .brand .nm{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:1.14rem;letter-spacing:-.01em}
+  .nav ul{display:flex;gap:28px;list-style:none}
+  .nav ul a{font-family:'Chakra Petch',sans-serif;font-size:.82rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);transition:color .18s ease}
+  .nav ul a:hover{color:var(--violet)}
+  .nav .cta{
+    font-family:'Chakra Petch',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink);padding:12px 24px;border-radius:999px;
+    background:linear-gradient(180deg,#FFFFFF,#D8DDE9);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 2px 0 rgba(16,19,28,.10), 0 6px 16px rgba(16,19,28,.10);
+    transition:transform .14s ease,box-shadow .14s ease;white-space:nowrap;
+  }
+  .nav .cta:hover{transform:translateY(-2px);box-shadow:inset 0 1px 0 #fff, 0 4px 0 rgba(16,19,28,.12), 0 10px 22px rgba(16,19,28,.14)}
+
+  /* ---------- hero ---------- */
+  .hero{padding:84px 0 92px}
+  .hero .grid2{display:grid;grid-template-columns:1.06fr .94fr;gap:56px;align-items:center}
+  .badge{
+    display:inline-flex;align-items:center;gap:9px;
+    font-family:'Chakra Petch',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--ink-2);padding:9px 18px;border-radius:999px;margin-bottom:28px;
+    background:linear-gradient(180deg,#FFFFFF,#E2E6EF);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 3px 10px rgba(16,19,28,.07);
+  }
+  .badge i{
+    width:9px;height:9px;border-radius:50%;
+    background:linear-gradient(100deg,var(--pink),var(--violet),var(--cyan));
+    box-shadow:0 0 10px rgba(124,92,255,.6);
+  }
+  .hero h1{font-size:clamp(2.5rem,5.8vw,4.4rem);max-width:16ch;margin-bottom:26px}
+  .hero p.lead{font-size:1.08rem;color:var(--ink-2);max-width:50ch;margin-bottom:38px;font-weight:300}
+  .btns{display:flex;gap:14px;flex-wrap:wrap}
+  .btn{
+    display:inline-block;font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:.84rem;
+    letter-spacing:.08em;text-transform:uppercase;padding:16px 32px;border-radius:999px;
+    transition:transform .14s ease,box-shadow .14s ease;
+  }
+  .btn-primary{
+    color:#fff;
+    background:linear-gradient(100deg,var(--pink),var(--violet) 48%,var(--cyan));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.55), 0 4px 0 rgba(124,92,255,.28), 0 12px 28px rgba(124,92,255,.34);
+  }
+  .btn-primary:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.55), 0 6px 0 rgba(124,92,255,.30), 0 18px 36px rgba(124,92,255,.4)}
+  .btn-ghost{
+    color:var(--ink);
+    background:linear-gradient(180deg,#FFFFFF,#DDE2EC);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 4px 0 rgba(16,19,28,.08), 0 10px 22px rgba(16,19,28,.08);
+  }
+  .btn-ghost:hover{transform:translateY(-3px)}
+
+  /* chrome disc */
+  .disc-wrap{display:grid;place-items:center;height:420px;position:relative}
+  .disc-wrap:before{
+    content:"";position:absolute;width:340px;height:340px;border-radius:50%;
+    background:conic-gradient(from 210deg, rgba(255,95,210,.5), rgba(124,92,255,.5), rgba(92,225,230,.5), rgba(180,255,92,.45), rgba(255,95,210,.5));
+    filter:blur(46px);opacity:.62;
+  }
+  .disc{
+    width:250px;height:250px;border-radius:50%;position:relative;z-index:2;
+    background:conic-gradient(from 0deg,#FFFFFF 0deg,#B9C1D2 48deg,#6F788C 92deg,#E9EDF5 150deg,#FFFFFF 200deg,#AEB6C7 254deg,#6F788C 300deg,#F2F5FA 344deg,#FFFFFF 360deg);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.9),
+      inset 0 12px 26px rgba(255,255,255,.9),
+      inset 0 -18px 34px rgba(16,19,28,.26),
+      0 22px 50px rgba(16,19,28,.20);
+    display:grid;place-items:center;
+  }
+  .disc:after{
+    content:"";width:86px;height:86px;border-radius:50%;
+    background:linear-gradient(180deg,#F7F9FC,#C9D0DD);
+    box-shadow:inset 0 2px 6px rgba(255,255,255,.9), inset 0 -4px 10px rgba(16,19,28,.22), 0 0 0 1px rgba(255,255,255,.7);
+  }
+  .disc .spark{
+    position:absolute;width:100%;height:2px;top:50%;left:0;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.9),transparent);
+  }
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:6px}
+  .stat{
+    border-radius:16px;padding:28px 20px;text-align:center;
+    background:linear-gradient(180deg,#FFFFFF,#E4E8F1);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 6px 18px rgba(16,19,28,.07);
+  }
+  .stat .n{font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:2rem;line-height:1;margin-bottom:8px}
+  .stat small{font-family:'Chakra Petch',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+  /* ---------- sections ---------- */
+  section{padding:92px 0}
+  .shead{max-width:58ch;margin-bottom:50px}
+  .kicker{
+    font-family:'Chakra Petch',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.18em;
+    text-transform:uppercase;display:inline-block;margin-bottom:18px;padding:7px 15px;border-radius:999px;
+    background:linear-gradient(100deg,rgba(255,95,210,.14),rgba(92,225,230,.16));
+    border:1px solid rgba(124,92,255,.24);
+  }
+  .shead h2{font-size:clamp(1.8rem,3.6vw,2.7rem);margin-bottom:18px}
+  .shead p{color:var(--ink-2);font-weight:300}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{
+    border-radius:18px;padding:32px 26px;position:relative;overflow:hidden;
+    background:linear-gradient(180deg,#FFFFFF,#EEF1F7);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 8px 22px rgba(16,19,28,.08);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .card:before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(100deg,var(--pink),var(--violet),var(--cyan),var(--lime));
+  }
+  .card:hover{transform:translateY(-5px);box-shadow:inset 0 1px 0 #fff, 0 16px 34px rgba(16,19,28,.13)}
+  .card .num{
+    font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.14em;
+    color:var(--muted);display:block;margin-bottom:20px;
+  }
+  .card h3{font-size:1.14rem;margin-bottom:11px}
+  .card p{color:var(--ink-2);font-size:.94rem;font-weight:300}
+
+  /* flagship */
+  .flag{
+    display:grid;grid-template-columns:1fr 1fr;border-radius:20px;overflow:hidden;
+    background:var(--white);border:1px solid var(--line);
+    box-shadow:0 16px 40px rgba(16,19,28,.12), inset 0 1px 0 #fff;
+  }
+  .flag .txt{padding:52px 46px}
+  .flag .txt h2{font-size:clamp(1.55rem,3vw,2.2rem);margin-bottom:20px}
+  .flag .txt p{color:var(--ink-2);margin-bottom:16px;font-weight:300;font-size:.99rem}
+  .flag .art{
+    position:relative;display:grid;place-items:center;min-height:430px;overflow:hidden;
+    background:linear-gradient(165deg,#12141D,#232636 62%,#171A26);
+  }
+  .flag .art:before{
+    content:"";position:absolute;width:300px;height:300px;border-radius:50%;
+    background:conic-gradient(from 0deg,rgba(255,95,210,.6),rgba(124,92,255,.6),rgba(92,225,230,.6),rgba(180,255,92,.5),rgba(255,95,210,.6));
+    filter:blur(52px);opacity:.72;
+  }
+  .flag .art .mini{
+    position:relative;z-index:2;width:150px;height:150px;border-radius:50%;
+    background:conic-gradient(from 40deg,#FFFFFF,#B9C1D2,#6F788C,#E9EDF5,#FFFFFF,#AEB6C7,#6F788C,#F2F5FA,#FFFFFF);
+    box-shadow:inset 0 8px 18px rgba(255,255,255,.9), inset 0 -12px 24px rgba(0,0,0,.35), 0 18px 44px rgba(0,0,0,.42);
+    display:grid;place-items:center;
+    font-family:'Chakra Petch',sans-serif;font-weight:700;font-size:3rem;color:#2A2F3E;
+    text-shadow:0 1px 0 #fff, 0 -1px 0 rgba(0,0,0,.3);
+  }
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px}
+  .tag{
+    font-family:'Chakra Petch',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-2);padding:8px 14px;border-radius:999px;
+    background:linear-gradient(180deg,#FFFFFF,#E8EBF3);border:1px solid var(--line);
+  }
+
+  /* values */
+  .vals{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+  .val{
+    border-radius:16px;padding:32px 28px;
+    background:linear-gradient(180deg,#FFFFFF,#E9EDF5);
+    border:1px solid var(--line);
+    box-shadow:inset 0 1px 0 #fff, 0 6px 18px rgba(16,19,28,.07);
+    transition:transform .18s ease;
+  }
+  .val:hover{transform:translateY(-4px)}
+  .val h3{font-size:1.06rem;margin-bottom:9px}
+  .val p{color:var(--ink-2);font-size:.93rem;font-weight:300}
+  .val .pill{
+    display:inline-block;font-family:'Chakra Petch',sans-serif;font-size:.66rem;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:#fff;padding:5px 12px;border-radius:999px;
+    margin-bottom:16px;background:linear-gradient(100deg,var(--pink),var(--violet));
+  }
+  .val:nth-child(2) .pill{background:linear-gradient(100deg,var(--violet),var(--cyan))}
+  .val:nth-child(3) .pill{background:linear-gradient(100deg,var(--cyan),var(--lime))}
+  .val:nth-child(4) .pill{background:linear-gradient(100deg,var(--lime),var(--pink))}
+
+  /* contact */
+  .contact{
+    border-radius:22px;padding:56px 48px;
+    background:linear-gradient(170deg,#10131C,#1B1F2C 58%,#12141D);
+    color:#EEF1F7;position:relative;overflow:hidden;
+    box-shadow:0 20px 50px rgba(16,19,28,.28);
+    display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;
+  }
+  .contact:before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background:
+      radial-gradient(420px 300px at 8% 0%, rgba(255,95,210,.35), transparent 62%),
+      radial-gradient(420px 320px at 96% 100%, rgba(92,225,230,.32), transparent 62%);
+  }
+  .contact > *{position:relative;z-index:2}
+  .contact h2{font-size:clamp(1.7rem,3.4vw,2.4rem);margin-bottom:16px;color:#fff}
+  .contact p{color:#AEB6C7;font-weight:300}
+  .boxes{display:flex;flex-direction:column;gap:12px}
+  .mbox{
+    border-radius:14px;padding:20px 24px;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.14);
+    backdrop-filter:blur(10px);
+  }
+  .mbox small{display:block;font-family:'Chakra Petch',sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8C96AB;margin-bottom:7px}
+  .mbox a{font-family:'Chakra Petch',sans-serif;font-weight:600;font-size:1rem;word-break:break-all;
+    background:linear-gradient(100deg,#FF9FE4,#A99BFF,#8FECEF);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:38px 0 50px;margin-top:12px}
+  footer .frow{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;align-items:center}
+  footer .cp{font-size:.84rem;color:var(--muted)}
+  footer nav{display:flex;gap:26px}
+  footer nav a{font-family:'Chakra Petch',sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  footer nav a:hover{color:var(--violet)}
+
+  @media(max-width:940px){
+    .nav ul{display:none}
+    .hero .grid2{grid-template-columns:1fr;gap:34px}
+    .disc-wrap{height:330px}
+    .disc{width:200px;height:200px}
+    .disc:after{width:70px;height:70px}
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .cards{grid-template-columns:1fr}
+    .flag{grid-template-columns:1fr}
+    .flag .art{order:-1;min-height:320px}
+    .flag .txt{padding:34px 26px}
+    .vals{grid-template-columns:1fr}
+    .contact{grid-template-columns:1fr;gap:34px;padding:38px 26px}
+    section{padding:62px 0}
+    .hero{padding:52px 0 60px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="/"><span class="mark"></span><span class="nm">Rommel Game Studio</span></a>
+    <ul>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#games">Games</a></li>
+      <li><a href="#standards">Standards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="cta" href="#contact">Say hello</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap grid2">
+    <div>
+      <span class="badge"><i></i>Independent Mobile Studio</span>
+      <h1><span class="chrome">Play,</span> <span class="holo">refined.</span></h1>
+      <p class="lead">
+        Rommel Game Studio builds polished casual games for phones. Clean interfaces, honest
+        progression, and absolutely nothing that wastes your time — that is the whole brief,
+        and we hold every release to it.
+      </p>
+      <div class="btns">
+        <a class="btn btn-primary" href="#games">Browse games</a>
+        <a class="btn btn-ghost" href="#contact">Get in touch</a>
+      </div>
+    </div>
+    <div class="disc-wrap">
+      <div class="disc"><span class="spark"></span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="n holo">2019</div><small>Founded</small></div>
+    <div class="stat"><div class="n holo">26</div><small>Titles live</small></div>
+    <div class="stat"><div class="n holo">47M</div><small>Installs</small></div>
+    <div class="stat"><div class="n holo">0</div><small>Forced waits</small></div>
+  </div>
+</div>
+
+<section id="studio">
+  <div class="wrap">
+    <div class="shead">
+      <span class="kicker">The Studio</span>
+      <h2>Small team. Short catalogue. Long support.</h2>
+      <p>
+        We release fewer games than most studios our size, and we keep working on them for
+        years. A title that ships in March should still be getting fixes the following winter —
+        that is the standard we set for ourselves.
+      </p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <span class="num">01 / Interface</span>
+        <h3>Nothing on screen that is not needed</h3>
+        <p>If an element does not help you play, it does not belong in the layout. We remove furniture rather than add it.</p>
+      </div>
+      <div class="card">
+        <span class="num">02 / Progression</span>
+        <h3>Earned, never purchased</h3>
+        <p>Every level in every game is reachable without spending. Store items are cosmetic or convenience, never a key.</p>
+      </div>
+      <div class="card">
+        <span class="num">03 / Reliability</span>
+        <h3>Tested where it hurts</h3>
+        <p>Low-end Android hardware, weak networks, interrupted sessions. If it breaks there, it does not ship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="games" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead">
+      <span class="kicker">Flagship</span>
+      <h2>Rommel — a puzzle built to be finished.</h2>
+    </div>
+    <div class="flag">
+      <div class="txt">
+        <p>
+          Our flagship title is a hand-authored logic puzzle with no clock and no penalty for
+          thinking. Each board introduces one idea, then asks you to combine it with everything
+          the game has taught you so far.
+        </p>
+        <p>
+          Hints are free and unlimited. Progress saves on every move, and the whole game runs
+          offline — on a plane, in a lift, or on a train that has given up on signal entirely.
+        </p>
+        <div class="tags">
+          <span class="tag">Puzzle</span>
+          <span class="tag">Offline</span>
+          <span class="tag">No fail state</span>
+          <span class="tag">Free to start</span>
+        </div>
+      </div>
+      <div class="art">
+        <div class="mini">R</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="standards" style="padding-top:0">
+  <div class="wrap">
+    <div class="shead">
+      <span class="kicker">Standards</span>
+      <h2>Four rules we will not trade away.</h2>
+    </div>
+    <div class="vals">
+      <div class="val">
+        <span class="pill">Rule 01</span>
+        <h3>No manufactured waiting</h3>
+        <p>We never bolt energy bars or cooldowns onto a game that does not need them. Difficulty belongs in the puzzle, not in the shop.</p>
+      </div>
+      <div class="val">
+        <span class="pill">Rule 02</span>
+        <h3>Prices before the press</h3>
+        <p>Anything purchasable is priced and described before you commit. No invented countdowns, no recurring "limited" offers.</p>
+      </div>
+      <div class="val">
+        <span class="pill">Rule 03</span>
+        <h3>Minimal collection</h3>
+        <p>We gather only what is needed to run and improve the game, set out plainly in our <a href="/privacy/" style="color:var(--violet);text-decoration:underline">Privacy Policy</a>.</p>
+      </div>
+      <div class="val">
+        <span class="pill">Rule 04</span>
+        <h3>Fix before feature</h3>
+        <p>A known crash is repaired before new content begins. A broken build is not a roadmap item — it is a broken product.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap" id="contact">
+  <div class="contact">
+    <div>
+      <h2>Talk to the studio</h2>
+      <p>
+        Publishers, distribution partners and players all reach the same inbox — and it is
+        read by the people who build the games.
+      </p>
+    </div>
+    <div class="boxes">
+      <div class="mbox">
+        <small>General &amp; Player Support</small>
+        <a href="mailto:muslimbinrafay@gmail.com">muslimbinrafay@gmail.com</a>
+      </div>
+      <div class="mbox">
+        <small>Business &amp; Publishing</small>
+        <a href="mailto:muslimbinrafay@gmail.com">muslimbinrafay@gmail.com</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="frow">
+      <div class="cp">© 2026 Rommel Game Studio. All rights reserved.</div>
+      <nav>
+        <a href="/privacy/">Privacy</a>
+        <a href="/terms/">Terms</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
